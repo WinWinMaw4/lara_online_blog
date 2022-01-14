@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
+
                     {{ __('You are logged in!') }}
+                    {{request()->url()}}
                 </div>
             </div>
         </div>

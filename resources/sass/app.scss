@@ -7,3 +7,18 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~venobox/dist/venobox.min.css";
+
+.uploader-ui{
+    width: 100px;
+    height: 100px;
+}
+
+
+td [data-gall]:first-child .list-thumbnail{
+    margin-left: 0;
+}
+
+.list-thumbnail{
+    margin-left:-20px;
+gi}
