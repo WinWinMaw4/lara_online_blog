@@ -4,6 +4,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">
+                       Category
+                    </div>
                     <div class="card-body">
                         <div class="mb-3 d-flex justify-content-between align-items-center">
                             <div class="">
@@ -36,6 +39,7 @@
                                 <th>Photo</th>
                                 <th>is Publish</th>
                                 <th>Category</th>
+                                <th>Tag</th>
                                 <th>Owner</th>
                                 <th>Control</th>
                                 <th>Created</th>
@@ -46,7 +50,7 @@
                                 <tr>
                                     <td>{{$post->id}}</td>
                                     <td class="small">{{Str::words($post->title,10)}}</td>
-                                    <td class="">
+                                    <td class="text-nowrap">
 {{--                                        href="{{asset('storage/photo/'.$photo->name)}}"--}}
                                        @forelse($post->photos()->latest('id')->limit(3)->get() as $photo)
                                             <a class="venobox" data-gall="img{{$post->id}}" data-maxwidth="500px"  title="{{$post->title}}" href="{{asset('storage/photo/'.$photo->name)}}">
@@ -65,7 +69,16 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {{$post->category->title ?? "Unknown"}}
+                                        {{$post->category->title ?? "Unknown Category"}}
+                                        <br>
+                                    </td>
+                                    <td>
+                                        @foreach($post->tags as $tag)
+                                            <span class="badge bg-primary small">
+                                                <i class="fas fa-hashtag"></i>
+                                                {{$tag->title}}
+                                            </span>
+                                        @endforeach
                                     </td>
                                     <td>
                                         {{$post->user->name ?? "Unknown User" }}

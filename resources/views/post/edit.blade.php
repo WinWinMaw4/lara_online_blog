@@ -36,8 +36,30 @@
                             <p class="text-danger small">{{ $message }}</p>
                             @enderror
                         </div>
+{{--tag--}}
+                        <div class="mb-3">
+                            <label class="form-label">Select Tag</label>
+                            <br>
+                            <div class="">
+                                @foreach(\App\Models\Tag::all() as $tag)
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" class="form-check-input" form="updateForm"  value="{{$tag->id}}" name="tags[]" id="tag{{$tag->id}}" {{in_array($tag->id,old('tags',$post->tags->pluck("id")->toArray() )) ? "checked": ""  }} >
+{{--                                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" form="updateForm" name="tags[]" id="tag{{ $tag->id }}" {{ in_array($tag->id,old('tags', $post->tags->pluck("id")->toArray() )) ? 'checked' : '' }} >--}}
 
-
+                                        <label class="form-check-label" for="tag{{$tag->id}}">
+                                            {{$tag->title}}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @error('tags')
+                            <p class="text-danger small">{{ $message }}</p>
+                            @enderror
+                            @error('tags.*')
+                            <p class="text-danger small">{{ $message }}</p>
+                            @enderror
+                        </div>
+{{--photo--}}
                         <div class="mb-3">
                             <label class="form-label">Photo</label>
                             <div class="border rounded p-3 d-flex overflow-scroll">
@@ -47,8 +69,11 @@
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                                     <div class="mb-3">
                                         <label class="form-label">Photo</label>
-                                        <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photoInput" value="{{ old('photo') }}" name="photo[]" multiple>
-                                        @error('photo')
+                                        <input type="file" class="form-control @error('photos') is-invalid @enderror" id="photoInput" name="photos[]" multiple>
+                                        @error('photos')
+                                        <p class="text-danger small">{{ $message }}</p>
+                                        @enderror
+                                        @error('photos.*')
                                         <p class="text-danger small">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -68,7 +93,7 @@
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
-                                        <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
+                                        <a class="venobox" data-gall="img{{ $post->id }}" data-maxwidth="500px"  title="{{$post->title}}" href="{{ asset('storage/photo/'.$photo->name) }}">
                                             <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" height="100" class="rounded-3" alt="image alt"/>
                                         </a>
                                     </div>

@@ -48,12 +48,15 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         //
+//        return $request;
         $request->validate([
             "title"=>"required|unique:posts,title|min:3",
             "category"=>"required|integer|exists:categories,id",
             "description"=>"required|min:20",
-            "photo"=>"nullable",
-            "photo.*"=>"file|max:3000|mimes:jpg,png"
+            "photos"=>"nullable",
+            "photos.*"=>"file|max:3000|mimes:jpg,png",
+            "tags"=>"required",
+            "tags.*"=>"integer|exists:tags,id"
         ]);
 
 
@@ -67,13 +70,16 @@ class PostController extends Controller
         $post->is_publish = true;
         $post->save();
 
+//        save tag to pivot table
+        $post->tags()->attach($request->tags);
+
 //        auto create folder
         if(!Storage::exists('public/thumbnail')){
             Storage::makeDirectory('public/thumbnail');
         }
 
-        if($request->hasFile('photo')){
-            foreach ($request->file('photo') as $photo){
+        if($request->hasFile('photos')){
+            foreach ($request->file('photos') as $photo){
 
 //                store file
                 $newName = uniqid()."_photo.".$photo->extension();
@@ -106,6 +112,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        return $post->tags;
         return view('post.show',compact('post'));
     }
 
@@ -145,6 +152,12 @@ class PostController extends Controller
       $post->category_id = $request->category;
       $post->update();
 
+//        delete all record form pivot
+        $post->tags()->detach();
+
+//        save tag to pivot table
+        $post->tags()->attach($request->tags);
+
       return redirect()->route('post.index')->with('status','post Updated');
 
 
@@ -174,6 +187,9 @@ class PostController extends Controller
 
 //        delete all record from hasMany
         $post->photos()->delete();
+
+//        delete all record form pivot
+        $post->tags()->detach();
 
         $post->delete();
         return redirect()->back()->with('status','Post delete');

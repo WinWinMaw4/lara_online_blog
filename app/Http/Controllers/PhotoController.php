@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Requests\UpdatePhotoRequest;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -19,6 +20,9 @@ class PhotoController extends Controller
     public function index()
     {
         //
+//        $photos = Photo::where('user_id',auth()->id())->get();
+        
+        return  view('photo.index');
     }
 
     /**
@@ -42,13 +46,13 @@ class PhotoController extends Controller
         //
         $request->validate([
             "post_id" => "required|integer",
-            "photo" => "nullable",
-            "photo.*" => "file|max:3000|mimes:jpg,png"
+            "photos" => "nullable",
+            "photos.*" => "file|max:3000|mimes:jpg,png"
         ]);
 
-        if($request->hasFile('photo')){
+        if($request->hasFile('photos')){
 
-            foreach ($request->file('photo') as $photo){
+            foreach ($request->file('photos') as $photo){
 
                 //store file
                 $newName = uniqid()."_photo.".$photo->extension();

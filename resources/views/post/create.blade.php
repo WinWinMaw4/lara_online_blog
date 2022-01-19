@@ -28,10 +28,35 @@
                                 <p class="text-danger small">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Select Tag</label>
+                                <br>
+                                <div class="">
+                                    @foreach(\App\Models\Tag::all() as $tag)
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" class="form-check-input" value="{{$tag->id}}" name="tags[]" id="tag{{$tag->id}}" {{in_array($tag->id,old('tags',[])) ? "checked":" "}}>
+                                            <label class="form-check-label" for="tag{{$tag->id}}">
+                                                {{$tag->title}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('tags')
+                                <p class="text-danger small">{{ $message }}</p>
+                                @enderror
+                                @error('tags.*')
+                                <p class="text-danger small">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <div class="mb-3">
                                 <label for="title" class="form-label text-muted">Photo</label>
-                                <input type="file" name="photo[]" class="form-control @error('photo') is-invalid @enderror" multiple>
-                                @error('photo')
+                                <input type="file" name="photos[]" class="form-control @error('photos') is-invalid @enderror" multiple>
+                                @error('photos')
+                                <p class="text-danger small">{{ $message }}</p>
+                                @enderror
+                                @error('photos.*')
                                 <p class="text-danger small">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -54,15 +79,15 @@
 
                         </form>
 {{--error တက်နေလို့ ပြန်စစ်ပါ--}}
-{{--                        @if ($errors->any())--}}
-{{--                            <div class="alert alert-danger">--}}
-{{--                                <ul>--}}
-{{--                                    @foreach($errors->all() as $error)--}}
-{{--                                        <li>{{$error}}</li>--}}
-{{--                                    @enderror--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{$error}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
