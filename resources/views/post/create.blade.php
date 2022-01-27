@@ -11,13 +11,15 @@
                     <div class="card-body">
                         <form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="mb-3">
-                                <label for="title" class="form-label text-muted">Post title</label>
-                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{old('title')}}">
-                                @error('title')
-                                <p class="text-danger small">{{ $message }}</p>
-                                @enderror
-                            </div>
+
+                            <x-input title="Post Title" name="title"></x-input>
+{{--                            <div class="mb-3">--}}
+{{--                                <label for="title" class="form-label text-muted">Post title</label>--}}
+{{--                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{old('title')}}">--}}
+{{--                                @error('title')--}}
+{{--                                <p class="text-danger small">{{ $message }}</p>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
                             <div class="mb-3">
                                 <select name="category" class="form-select @error('category') is-invalid @enderror">
                                     @foreach(\App\Models\Category::all() as $category)

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostObserver
 {
@@ -15,6 +16,7 @@ class PostObserver
     public function created(Post $post)
     {
         //
+
     }
 
     /**
@@ -37,6 +39,7 @@ class PostObserver
     public function deleted(Post $post)
     {
         //
+        logger($post->title." is deleted by ".Auth::user()->name);
     }
 
     /**

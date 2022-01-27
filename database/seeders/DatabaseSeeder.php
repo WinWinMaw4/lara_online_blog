@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Photo;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => "Win Win Maw",
+            'role'=> "admin",
             'email' => "admin@gmail.com",
             'email_verified_at' => now(),
             'password' => Hash::make('asdffdsa'),
@@ -28,10 +30,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // \App\Models\User::factory(10)->create();
-        User::factory(120)->create();
-        Category::factory(15)->create();
-        Post::factory(120)->create();
-        Tag::factory(15)->create();
+        User::factory(10)->create();
+        Category::factory(5)->create();
+        Post::factory(20)->create();
+        Tag::factory(5)->create();
+
+
+//        Photo::create([
+//            'name'=>"asdf",
+//            'user_id'=>1,
+//            'post_id'=>1
+//        ]);
+//
+//        Photo::create([
+//            'name'=>"asdf",
+//            'user_id'=>1,
+//            'post_id'=>1
+//        ]);
 
 //        foreach(Post::all() as $post){
 //

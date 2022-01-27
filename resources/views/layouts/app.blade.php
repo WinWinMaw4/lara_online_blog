@@ -33,24 +33,16 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                        @auth
-                            <li class="nav-item">
-                                <a class="nav-link {{route('home') == request()->url()? 'active':''}}" aria-current="page" href="{{route('home')}}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{route('category.create') == request()->url()? 'active':''}}" aria-current="page" href="{{route('category.create')}}">Create Category</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{route('category.index') == request()->url()? 'active':''}}" aria-current="page" href="{{route('category.index')}}">Category List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{route('post.create') == request()->url()? 'active':''}}" aria-current="page" href="{{route('post.create')}}">Create Post</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{route('post.index') == request()->url()? 'active':''}}" aria-current="page" href="{{route('post.index')}}">Post List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{route('photo.index') == request()->url()? 'active':''}}" aria-current="page" href="{{route('photo.index')}}">My Photo</a>
-                            </li>
+                            <x-li ></x-li>
+                            <x-li route-name="home" name="Home"></x-li>
+                            @onlyAdmin
+                            <x-li route-name="category.create" name="Create Category"></x-li>
+                            <x-li route-name="category.index" name="Category List"></x-li>
+                            @endonlyAdmin
+                            <x-li route-name="post.create" name="Create Post"></x-li>
+
+                            <x-li route-name="post.index" name="Post List"></x-li>
+                            <x-li route-name="photo.index" name="My Photo"></x-li>
                        @endauth
                     </ul>
 
@@ -131,5 +123,7 @@
             spinner: 'fold'
         });
     </script>
+
+    @stack('jsScript');
 </body>
 </html>
